@@ -10,6 +10,9 @@ from shot import Shot
 
 def main():
     pygame.init()
+     
+    explode_sound = pygame.mixer.Sound("asteroid_exp.mp3")
+    end_game_sound =pygame.mixer.Sound("game-over_sound.mp3")
     VERSION = pygame.version.ver
     WIDTH = constants.SCREEN_WIDTH
     HEIGHT = constants.SCREEN_HEIGHT
@@ -71,15 +74,21 @@ def main():
                    player.position. y = HEIGHT/2
                    
                else:                    
-                    log_event("player_hit")
-                    print("Game over!")
+                    log_event("player_hit")                    
                     print(f"Final Score: {score}")
+                    print("Game over!")  
+                    end_game_sound.play()
+                    while pygame.mixer.get_busy():
+                        pygame.time.delay(50)
+                        pygame.event.pump()
                     sys.exit()
-                
+                 
             
             for shot in shots:
+                
                 if asteroid.collides_with(shot):
                   log_event("asteroid_shot")
+                  explode_sound.play()
                   asteroid.split()
                   shot.kill()
                   score += 10
