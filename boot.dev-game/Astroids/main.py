@@ -24,13 +24,13 @@ def main():
     player_y = HEIGHT/2
     # Adding Groups
     updatable = pygame.sprite.Group()
-    drawable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group() 
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
 
     #Setting up the groups that were added
-    #Player GROUP
-    Player.containers = (updatable, drawable)
+    #Player GROUP 
+    Player.containers = (updatable, drawable)     
     player = Player(player_x, player_y)
 
     #Asteroid GROUP
@@ -40,6 +40,13 @@ def main():
 
     #Shots GROUP
     Shot.containers = (shots, updatable, drawable)
+
+    #Add scoring system take 1
+    score = 0    
+    
+    #Player Lives
+    lives = constants.PLAYER_LIVES
+    
     
 
     while True:
@@ -58,20 +65,38 @@ def main():
         for asteroid in asteroids:
              
             if asteroid.collides_with(player):
-                log_event("player_hit")
-                print("Game over!")
-                sys.exit()
+               if lives > 0:
+                   lives -= 1
+                   player.position.x = WIDTH/2
+                   player.position. y = HEIGHT/2
+                   
+               else:                    
+                    log_event("player_hit")
+                    print("Game over!")
+                    print(f"Final Score: {score}")
+                    sys.exit()
+                
             
             for shot in shots:
                 if asteroid.collides_with(shot):
                   log_event("asteroid_shot")
                   asteroid.split()
                   shot.kill()
+                  score += 10
         
         
            
+        #Renderign Score
+        font = pygame.font.SysFont (None, 36)
+        score_text = font.render(f"Your Score  : {score}", True, "white")
+        screen.blit(score_text, (10, 10))
 
-        
+        #Rendering Lives
+
+        font = pygame.font.SysFont (None, 36)
+        score_text = font.render(f"Your lives  : {lives}", True, "white")
+        screen.blit(score_text, (10, 40))
+
         pygame.display.flip()
         dt = (clock.tick(60))/1000
         
