@@ -13,6 +13,7 @@ def main():
      
     explode_sound = pygame.mixer.Sound("asteroid_exp.mp3")
     end_game_sound =pygame.mixer.Sound("game-over_sound.mp3")
+    shoot_sound = pygame.mixer.Sound("shoot_sound.mp3")
     VERSION = pygame.version.ver
     WIDTH = constants.SCREEN_WIDTH
     HEIGHT = constants.SCREEN_HEIGHT
@@ -34,7 +35,8 @@ def main():
     #Setting up the groups that were added
     #Player GROUP 
     Player.containers = (updatable, drawable)     
-    player = Player(player_x, player_y)
+    player = Player(player_x, player_y, shoot_sound)
+    
 
     #Asteroid GROUP
     Asteroid.containers = (asteroids, updatable, drawable)
@@ -43,6 +45,7 @@ def main():
 
     #Shots GROUP
     Shot.containers = (shots, updatable, drawable)
+    shoot_sound = pygame.mixer.Sound("shoot_sound.mp3")
 
     #Add scoring system take 1
     score = 0    
@@ -82,7 +85,8 @@ def main():
                         pygame.time.delay(50)
                         pygame.event.pump()
                     sys.exit()
-                 
+
+                    
             
             for shot in shots:
                 

@@ -4,8 +4,9 @@ import pygame
 from shot import *
 
 class Player(CircleShape):
-    def __init__(self, x, y):
+    def __init__(self, x, y, shoot_sound=None):
         self.cooldown_timer = 0
+        self.shoot_sound = shoot_sound  # Store it as an instance variable
         
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
@@ -66,8 +67,10 @@ class Player(CircleShape):
             shot = Shot(self.position.x, self.position.y, SHOT_RADIUS)
             shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED
             self.cooldown_timer = PLAYER_SHOOT_COOLDOWN_SECONDS
-            
 
-
+        
+        if self.shoot_sound:
+            self.shoot_sound.play()
+       
 
         
