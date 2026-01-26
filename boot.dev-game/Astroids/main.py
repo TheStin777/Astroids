@@ -12,7 +12,7 @@ def main():
     pygame.init()
      
     explode_sound = pygame.mixer.Sound("asteroid_exp.mp3")
-    end_game_sound =pygame.mixer.Sound("game-over_sound.mp3")
+    end_game_sound = pygame.mixer.Sound("game-over_sound.mp3")
     shoot_sound = pygame.mixer.Sound("shoot_sound.mp3")
     VERSION = pygame.version.ver
     WIDTH = constants.SCREEN_WIDTH
