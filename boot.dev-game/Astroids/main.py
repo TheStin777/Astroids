@@ -7,6 +7,7 @@ from asteroid import Asteroid
 from logger import log_event
 import sys
 from shot import Shot
+from scoring import *
 
 def main():
     pygame.init()
@@ -95,7 +96,7 @@ def main():
                   explode_sound.play()
                   asteroid.split()
                   shot.kill()
-                  score += 10
+                  score += get_points_for_asteroid(asteroid.radius)
         
         
            
